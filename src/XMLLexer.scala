@@ -1,7 +1,7 @@
 
 package stefan.rss;
 
-object XMLLexer 
+class XMLLexer 
 {
 	
 	def tokenize(input : String) : Array[String] = {
@@ -11,11 +11,10 @@ object XMLLexer
 
 		/*
 			0: default ot whitespace
-			1: number 
 		*/
 		for (c <- input) 
 		{
-			if (c == " " || c == "\n")
+			if (c == " " || c == "\n" || c == "\t")
 			{
 			}
 			else if ("<>=\"" contains c) 
@@ -24,22 +23,6 @@ object XMLLexer
 				state = 0;
 				current = "";
 				tokens = tokens :+ c.toString;
-			}
-			else if (("0123456789" contains c) && state == 1) 
-			{
-				current += c.toString; 
-			}
-			else if (("0123456789" contains c) && state == 0) 
-			{
-				if (current != "") tokens = tokens :+ current; 
-				state = 1; 
-				current = c.toString; 
-			}
-			else if (!("0123456789" contains c) && state == 1) 
-			{
-				tokens = tokens :+ current; 
-				current = c.toString; 
-				state = 0; 
 			}
 			else 
 			{

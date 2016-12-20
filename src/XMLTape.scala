@@ -60,4 +60,9 @@ class XMLTape (input : Array[String])
 	{
 		return symbols(index);
 	}
+
+	def isBlank() : Boolean = 
+	{
+		return symbols(index).trim().isEmpty();
+	}
 }
