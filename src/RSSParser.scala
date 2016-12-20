@@ -28,7 +28,7 @@ class RSSParser (val source : String)
 	tape.expect(">");
 	while (tape.current() != "<") 
 	{
-		title = title + (tape.current + " ");
+		title = title + tape.current;
 		tape.next();
 	}
 	tape.expect("<");
@@ -43,7 +43,7 @@ class RSSParser (val source : String)
 	tape.expect(">");
 	while (tape.current() != "<") 
 	{
-		desc = desc + (tape.current + " ");
+		desc = desc + tape.current;
 		tape.next();
 	}
 	tape.expect("<");
@@ -57,7 +57,7 @@ class RSSParser (val source : String)
 	tape.expect(">");
 	while (tape.current() != "<") 
 	{
-		url = url + (tape.current + " ");
+		url = url + tape.current;
 		tape.next();
 	}
 	tape.expect("<");
