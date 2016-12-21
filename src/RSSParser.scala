@@ -41,6 +41,12 @@ class RSSParser (val source : String)
 		return node;
 	}
 	while (tape.isBlank()) tape.next();
+	if (tape.current() == "<" && (tape.following() contains "?xml")) 
+	{
+		while (tape.current() != ">") tape.next();
+	}
+	tape.next();
+	while (tape.isBlank()) tape.next();
 	var doc = parse().findElementByName("channel");
 	var articles = new Array[RSSArticle](0);
 	var channel = new RSSSource(doc.findElementByName("title").text, doc.findElementByName("description").text, doc.findElementByName("link").text);
