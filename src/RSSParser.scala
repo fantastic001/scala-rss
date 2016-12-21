@@ -9,7 +9,6 @@ class RSSParser (val source : String)
 	val lexer = new XMLLexer;
 	val tokens = lexer.tokenize(source);
 
-	for (token <- tokens) println(token);
 	val tape = new XMLTape(tokens);
 
 	def parse() : RSSNode =

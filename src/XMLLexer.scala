@@ -19,7 +19,6 @@ class XMLLexer
 			}
 			else if ("</>=\"" contains c) 
 			{
-				println("Found sign");
 				if (current != "") tokens = tokens :+ current; 
 				state = 0;
 				current = "";
