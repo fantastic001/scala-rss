@@ -7,9 +7,11 @@ class XMLTape (input : Array[String])
 	var index : Int = 0; 
 	var errors : Array[String] = new Array[String](0);
 	var accepted : String = "";
+	var end = false; 
 	def next() : Unit =
 	{
 		index = index + 1;
+		if (index == symbols.length) end = true;
 	}
 
 	def accept(symbol : String) : Boolean = 

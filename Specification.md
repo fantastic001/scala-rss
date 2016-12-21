@@ -20,7 +20,8 @@ RSSParser
 ----------------
 
   * RSSParser(source: String)
-  * getArticle() -> RSSArticle
+  * getSource() -> RSSSource
+  * getArticles() -> Array of RSSArticle
 
 
 RSSSource

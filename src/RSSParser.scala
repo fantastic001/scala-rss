@@ -6,68 +6,47 @@ import java.util.Date;
 class RSSParser (val source : String)
 {
 
-	var title = "";
-	var desc = ""; 
-	var content = ""; 
-	var url = ""; 
-	//var date : Date; TODO will be defined later
-
 	val lexer = new XMLLexer;
 	val tokens = lexer.tokenize(source);
 
+	for (token <- tokens) println(token);
 	val tape = new XMLTape(tokens);
 
-	while (tape.isBlank()) tape.next();
-	tape.expect("<");
-	tape.expect("item");
-	tape.expect(">");
-	while (tape.isBlank()) tape.next();
-
-	tape.expect("<");
-	tape.expect("title");
-	tape.expect(">");
-	while (tape.current() != "<") 
+	def parse() : RSSNode =
 	{
-		title = title + tape.current;
-		tape.next();
+		var node = new RSSNode();
+		tape.expect("<");
+		node.name = tape.current();
+		while (tape.current() != ">") tape.next();
+		tape.expect(">");
+		while (tape.current() != "</") 
+		{
+			if (!tape.isBlank()) 
+			{
+				if (tape.current() == "<") 
+				{
+					node.childs = node.childs :+ parse();
+				}
+				else 
+				{
+					node.text = node.text + tape.current();
+				}
+			}
+			tape.next();
+		}
+		tape.expect(node.name);
+		tape.expect(">");
+		return node;
 	}
-	tape.expect("<");
-	tape.expect("/title");
-	tape.expect(">");
-
-
 	while (tape.isBlank()) tape.next();
-
-	tape.expect("<");
-	tape.expect("description");
-	tape.expect(">");
-	while (tape.current() != "<") 
+	var doc = parse().findElementByName("channel");
+	var articles = new Array[RSSArticle](0);
+	var channel = new RSSSource(doc.findElementByName("title").text, doc.findElementByName("description").text, doc.findElementByName("link").text);
+	for (child <- doc.childs) 
 	{
-		desc = desc + tape.current;
-		tape.next();
+		if (child.name == "item")  
+		{
+			articles = articles :+ new RSSArticle(child.findElementByName("title").text, child.findElementByName("description").text, "", new Date(), child.findElementByName("link").text);
+		}
 	}
-	tape.expect("<");
-	tape.expect("/description");
-	tape.expect(">");
-
-	while (tape.isBlank()) tape.next();
-
-	tape.expect("<");
-	tape.expect("link");
-	tape.expect(">");
-	while (tape.current() != "<") 
-	{
-		url = url + tape.current;
-		tape.next();
-	}
-	tape.expect("<");
-	tape.expect("/link");
-	tape.expect(">");
-	
-
-	while (tape.isBlank()) tape.next();
-	var article = new RSSArticle(title, desc, "", new Date(), url);
-	for (error <- tape.errors)println(error);
-
-	def getArticle() : RSSArticle = article;
 }
