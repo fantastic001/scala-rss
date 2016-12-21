@@ -62,6 +62,10 @@ class XMLTape (input : Array[String])
 	{
 		return symbols(index);
 	}
+	def following() : String = 
+	{
+		return symbols(index + 1);
+	}
 
 	def isBlank() : Boolean = 
 	{

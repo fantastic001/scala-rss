@@ -15,5 +15,6 @@ object Main
 		//var article = new RSSArticle("stefan", "decription", "jkhjkhjk", new Date(), "url")
 		var article = parser.articles(0);
 		article.save("file.json");
+		parser.channel.save("source.json");
 	}
 }

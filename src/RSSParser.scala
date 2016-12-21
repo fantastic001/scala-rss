@@ -19,7 +19,7 @@ class RSSParser (val source : String)
 		node.name = tape.current();
 		while (tape.current() != ">") tape.next();
 		tape.expect(">");
-		while (tape.current() != "</") 
+		while (tape.current() != "<" || tape.following() != "/") 
 		{
 			if (!tape.isBlank()) 
 			{
@@ -34,6 +34,8 @@ class RSSParser (val source : String)
 			}
 			tape.next();
 		}
+		tape.expect("<");
+		tape.expect("/");
 		tape.expect(node.name);
 		tape.expect(">");
 		return node;

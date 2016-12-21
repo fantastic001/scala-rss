@@ -11,39 +11,19 @@ class XMLLexer
 
 		/*
 			0: default ot whitespace
-			1: < state
 		*/
 		for (c <- input) 
 		{
 			if (c == " " || c == "\n" || c == "\t")
 			{
 			}
-			else if (">=\"" contains c) 
+			else if ("</>=\"" contains c) 
 			{
+				println("Found sign");
 				if (current != "") tokens = tokens :+ current; 
 				state = 0;
 				current = "";
 				tokens = tokens :+ c.toString;
-			}
-			else if (c == "<") {
-				if (current != "") tokens = tokens :+ current; 
-				state = 1;
-				current = "";
-			}
-			else if (state == 1) 
-			{
-				if (c == "/") {
-					tokens = tokens :+ "</";
-					state = 0;
-					current = "";
-				}
-
-				else 
-				{
-					tokens = tokens :+ "<";
-					current = c.toString();
-					state = 0;
-				}
 			}
 			else 
 			{
