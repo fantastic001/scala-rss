@@ -11,11 +11,14 @@ class RSSParser (val source : String)
 
 	val tape = new XMLTape(tokens);
 
+	def tagname(name : String) = name.split(" ")(0);
+
 	def parse() : RSSNode =
 	{
 		var node = new RSSNode();
 		tape.expect("<");
-		node.name = tape.current();
+		node.name = (tagname(tape.current()));
+		println("Parsing node " + node.name);
 		while (tape.current() != ">") tape.next();
 		tape.expect(">");
 		while (tape.current() != "<" || tape.following() != "/") 
@@ -46,8 +49,12 @@ class RSSParser (val source : String)
 	}
 	tape.next();
 	while (tape.isBlank()) tape.next();
+	println("Finding channel");
 	var doc = parse().findElementByName("channel");
+
 	var articles = new Array[RSSArticle](0);
+
+
 	var channel = new RSSSource(doc.findElementByName("title").text, doc.findElementByName("description").text, doc.findElementByName("link").text);
 	for (child <- doc.childs) 
 	{

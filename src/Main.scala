@@ -10,11 +10,12 @@ object Main
 {
 	def main(args: Array[String]) =
 	{
-		val content = new Scanner(new File("item.xml")).useDelimiter("\\Z").next();
-		val parser = new RSSParser(content);
+		//val content = new Scanner(new File("item.xml")).useDelimiter("\\Z").next();
+		//val parser = new RSSParser(content);
 		//var article = new RSSArticle("stefan", "decription", "jkhjkhjk", new Date(), "url")
-		var article = parser.articles(0);
+		var downloader = new RSSDownloader("https://fantastic001.github.io/feed.xml");
+		var article = downloader.articles(0);
 		article.save("file.json");
-		parser.channel.save("source.json");
+		downloader.channel.save("source.json");
 	}
 }

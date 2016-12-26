@@ -20,8 +20,7 @@ RSSParser
 ----------------
 
   * RSSParser(source: String)
-  * getSource() -> RSSSource
-  * getArticles() -> Array of RSSArticle
+  * getArticle() -> RSSArticle
 
 
 RSSSource
@@ -32,15 +31,11 @@ RSSSource
 RSSDownloader
 -------------
 
-  * RSSDownloader(RSSSource)
-  * getArticles() -> List of RSSArticle
+  * RSSDownloader(urlOfFeed)
   * download(url) -> String 
-  * downloadArticle(url) -> Article
 
 RSSDatabase
 ----------
 
   * getArticles() -> List of RSSArticle
-  * download(url) -> String 
-  * downloadArticle(url) -> Article
   * RSSDatabase(pathToRoot)
