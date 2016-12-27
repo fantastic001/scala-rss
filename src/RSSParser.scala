@@ -2,6 +2,7 @@
 package stefan.rss; 
 
 import java.util.Date; 
+import java.text.SimpleDateFormat;
 
 class RSSParser (val source : String)
 {
@@ -64,7 +65,7 @@ class RSSParser (val source : String)
 	{
 		if (child.name == "item")  
 		{
-			articles = articles :+ new RSSArticle(child.findElementByName("title").text, child.findElementByName("description").text, "", new Date(), child.findElementByName("link").text);
+			articles = articles :+ new RSSArticle(child.findElementByName("title").text, child.findElementByName("description").text, "", new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z").parse(child.findElementByName("pubDate").text), child.findElementByName("link").text);
 		}
 	}
 }

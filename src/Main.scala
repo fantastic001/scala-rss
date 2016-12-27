@@ -16,6 +16,8 @@ object Main
 		var downloader = new RSSDownloader("https://fantastic001.github.io/feed.xml");
 		var article = downloader.articles(0);
 		article.save("file.json");
+		var db = new RSSDatabase("/me/data/Research and development/scala-rss/src");
+		db.restore_article("file.json").save("file1.json");
 		downloader.channel.save("source.json");
 	}
 }
