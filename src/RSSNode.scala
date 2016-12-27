@@ -11,7 +11,6 @@ class RSSNode
 	{
 		for (child <- childs) 
 		{
-			println("Checking " + child.name + " " + child.text);
 			if (child.name == name) return child; 
 			else 
 			{

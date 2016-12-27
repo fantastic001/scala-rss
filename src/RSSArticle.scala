@@ -1,6 +1,7 @@
 
-package stefan.rss;
 
+
+package stefan.rss; 
 
 import java.util.Date; 
 

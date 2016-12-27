@@ -27,7 +27,6 @@ class RSSDownloader (val source : String)
 		return response.toString();
 	}
 	var content = download(source);
-	println(content)
 	var parser = new RSSParser(content);
 	var channel = parser.channel;
 	var articles = parser.articles;

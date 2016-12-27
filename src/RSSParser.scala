@@ -18,8 +18,13 @@ class RSSParser (val source : String)
 		var node = new RSSNode();
 		tape.expect("<");
 		node.name = (tagname(tape.current()));
-		println("Parsing node " + node.name);
-		while (tape.current() != ">") tape.next();
+		while (tape.current() != ">") {
+			tape.next();
+			if (tape.current() == "/" && tape.following() == ">") 
+			{
+				return node; 
+			}
+		}
 		tape.expect(">");
 		while (tape.current() != "<" || tape.following() != "/") 
 		{
@@ -49,7 +54,6 @@ class RSSParser (val source : String)
 	}
 	tape.next();
 	while (tape.isBlank()) tape.next();
-	println("Finding channel");
 	var doc = parse().findElementByName("channel");
 
 	var articles = new Array[RSSArticle](0);
