@@ -14,10 +14,18 @@ object Main
 		//val parser = new RSSParser(content);
 		//var article = new RSSArticle("stefan", "decription", "jkhjkhjk", new Date(), "url")
 		var downloader = new RSSDownloader("https://fantastic001.github.io/feed.xml");
-		var article = downloader.articles(0);
-		article.save("file.json");
-		var db = new RSSDatabase("/me/data/Research and development/scala-rss/src");
-		db.restore_article("file.json").save("file1.json");
+		var articles = downloader.articles;
+		var db = new RSSDatabase("/home/stefan/rss-db/");
+		println("Saving articles");
+		for (article <- articles) 
+		{
+			db.save_article(article);
+		}
+		println("Getting saved articles");
+		for (article <- db.get_articles()) 
+		{
+			println(article.title);
+		}
 		downloader.channel.save("source.json");
 	}
 }

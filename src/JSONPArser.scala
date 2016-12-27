@@ -4,11 +4,9 @@ package stefan.rss;
 class JSONParser (val text : String) 
 {
 	var i : Int = 0;
-	println(text);
 
 	private def parse_blank() = 
 	{
-		println("Parsing blank");
 		while (i < text.length && (" \t\n\r" contains text(i))) i = i + 1;
 	}
 
@@ -19,7 +17,6 @@ class JSONParser (val text : String)
 			str = str + text(i);
 			i = i + 1; 
 		}
-		println("Parsed string " + str);
 		return str; 
 	}
 
@@ -37,7 +34,6 @@ class JSONParser (val text : String)
 	{
 		if (c == text(i).toString()) 
 		{
-			println("Accepting " + c);
 			i = i + 1;
 			return true; 
 		}
@@ -72,7 +68,6 @@ class JSONParser (val text : String)
 				parse_blank();
 			}
 		}
-		println("Parsed map " + k + " -> " + v);
 		return (k -> v);
 	}
 
@@ -80,13 +75,11 @@ class JSONParser (val text : String)
 	{
 		var m = Map[String, String]();
 		parse_blank();
-		println(text(i));
 		if (accept("{")) {
 			m += parse_map();
 			while (accept(",")) m += parse_map();
 			parse_blank();
 			accept("}"); 
-			println("Parsed dict");
 		}
 		return m;
 
